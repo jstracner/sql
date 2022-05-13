@@ -1,0 +1,81 @@
+Part 1 – Take a backup
+ 
+backup database <DATABASE_NAME> to disk = '<LOCATION>' with stats = 10 
+ 
+Example:
+ 
+backup database trainDoug 
+to disk = '\\SERVER\Locations\DBname.bak' 
+with stats = 10
+ 
+ 
+Part 2 – Try restore to new SQL instance 
+ 
+ restore database <DATABASE_NAME> from disk = '<LOCATION>' with stats = 10 
+ 
+Example: 
+restore database trainDoug 
+from disk =  '\\SERVER\Locations\DBname.bak' 
+with stats = 10
+ 
+Part 3 – Restore to new SQL instance with file move 
+ 
+restore filelistonly 
+from disk =  '<LOCATION>'
+ 
+Example: 
+restore filelistonly 
+from disk =  '\\SERVER\Locations\DBname.bak' 
+ 
+Then…..
+ 
+restore database <DATABASE_NAME>
+from disk =  '<LOCATION>' 
+with stats = 10 
+,move '<File1>' to '<File1 Location>'
+,move '<File2>' to '<File2 Location>' 
+ 
+Example: 
+restore database trainDoug 
+from disk =  '\\cor-dd2500.na.yla.ad\DBLogs\DEV\DOUGTESTDB\trainDoug.bak' 
+with stats = 10 
+,move 'trainDoug' to    'w:\train\trainJOe.mdf'
+,move 'trainDoug_log' to 'w:\train\trainJoe_log.ldf'
+
+
+
+Part 4 – Run CHECKDB for restored database
+ 
+DBCC CHECKDB('<DATABASE_NAME>') WITH ALL_ERRORMSGS, NO_INFOMSGS
+ 
+Example: 
+DBCC CHECKDB('trainDoug') WITH ALL_ERRORMSGS, NO_INFOMSGS
+
+
+vCenter scripts:
+
+update vpx_parameter set value = '15' where NAME = 'event.MaxAge';
+update vpx_parameter set value = 'true' where NAME = 'event.MaxAgeEnabled';
+update vpx_parameter set value = '15' where NAME = 'task.MaxAge';
+update vpx_parameter set value = 'true' where NAME = 'task.MaxAgeEnabled';
+
+
+
+AZURE PaaS SQL new user
+
+
+• Connect to your Azure SQL Database server with SSMS as an admin in master. Create a SQL authentication login called ‘test’ with a password of ‘SuperSecret!’, create a user mapped to the login called ‘test’ in a database, and then add it to the db_datareader and db_datawriter roles.
+-- create SQL auth login from master 
+CREATE LOGIN test 
+WITH PASSWORD = 'SuperSecret!' 
+• Open another query window and choose your user database in the dropdown.
+-- select your db in the dropdown and create a user mapped to a login 
+CREATE USER [test] 
+FOR LOGIN [test] 
+WITH DEFAULT_SCHEMA = dbo; 
+  
+-- add user to role(s) in db 
+ALTER ROLE db_datareader ADD MEMBER [test]; 
+ALTER ROLE db_datawriter ADD MEMBER [test]; 
+• Repeat second step for all databases you are adding ‘test’ to. Note, you will need to open a new connection(s).
+
