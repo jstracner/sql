@@ -36,11 +36,11 @@ with stats = 10
 ,move '<File2>' to '<File2 Location>' 
  
 Example: 
-restore database trainDoug 
-from disk =  '\\cor-dd2500.na.yla.ad\DBLogs\DEV\DOUGTESTDB\trainDoug.bak' 
+restore database trainJoe
+from disk =  '\\SERVER\Locations\DBname.bak' 
 with stats = 10 
-,move 'trainDoug' to    'w:\train\trainJOe.mdf'
-,move 'trainDoug_log' to 'w:\train\trainJoe_log.ldf'
+,move 'trainJoe' to    'w:\train\trainJOe.mdf'
+,move 'trainJoe_log' to 'w:\train\trainJoe_log.ldf'
 
 
 
@@ -49,7 +49,7 @@ Part 4 – Run CHECKDB for restored database
 DBCC CHECKDB('<DATABASE_NAME>') WITH ALL_ERRORMSGS, NO_INFOMSGS
  
 Example: 
-DBCC CHECKDB('trainDoug') WITH ALL_ERRORMSGS, NO_INFOMSGS
+DBCC CHECKDB('trainJoe') WITH ALL_ERRORMSGS, NO_INFOMSGS
 
 
 vCenter scripts:
