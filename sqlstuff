@@ -4,7 +4,7 @@ backup database <DATABASE_NAME> to disk = '<LOCATION>' with stats = 10
  
 Example:
  
-backup database trainDoug 
+backup database trainJoe
 to disk = '\\SERVER\Locations\DBname.bak' 
 with stats = 10
  
@@ -14,7 +14,7 @@ Part 2 – Try restore to new SQL instance
  restore database <DATABASE_NAME> from disk = '<LOCATION>' with stats = 10 
  
 Example: 
-restore database trainDoug 
+restore database trainJoe
 from disk =  '\\SERVER\Locations\DBname.bak' 
 with stats = 10
  
